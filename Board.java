@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import java.lang.Math;
+
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -21,17 +23,12 @@ public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
     private Player player;
-    private ArrayList aliens;
     private ArrayList buildings;
     private boolean ingame;
     private int B_WIDTH;
     private int B_HEIGHT;
     private static Board instance;
     private double speed;
-
-    private int[][] pos = { 
-        {250, 200}
-     };
 
     public Board() {
         addKeyListener(new TAdapter());
@@ -44,7 +41,6 @@ public class Board extends JPanel implements ActionListener {
 
         player = new Player();
 
-        initAliens();
         initBuildings();
 
         timer = new Timer(5, this);
@@ -63,20 +59,19 @@ public class Board extends JPanel implements ActionListener {
         B_HEIGHT = getHeight();   
     }
 
-    public void initAliens() {
-        aliens = new ArrayList();
-
-        for (int i=0; i<pos.length; i++ ) {
-            aliens.add(new Alien(pos[i][0], pos[i][1]));
-        }
+    public double getSpeed() {
+        return speed;
     }
 
     public void initBuildings() {
         this.buildings = new ArrayList();
+        
+        this.buildings.add(new Building(500, 500, 0, 300));
+        this.buildings.add(new Building(500, 500, 600, 400));
+    }
 
-        for (int i=0; i<1; i++ ) {
-            this.buildings.add(new Building(200, 50, 10, 100));
-        }
+    public void addBuilding() {
+        this.buildings.add(new Building(getRandom(200,500), 500, getWidth()+getRandom(50,200), getRandom(200,400)));
     }
 
 
@@ -87,12 +82,8 @@ public class Board extends JPanel implements ActionListener {
 
             Graphics2D g2d = (Graphics2D)g;
             
-            g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
+            g2d.drawImage(player.getImage(), (int)player.getX(), (int)player.getY(), this);
 
-            for(int i = 0; i<aliens.size();++i) {
-                Alien a = (Alien) aliens.get(i);
-                g2d.drawImage(a.getImage(), a.getX(), a.getY(), this);
-            }
 
             g2d.setColor(Color.WHITE);
 
@@ -101,7 +92,7 @@ public class Board extends JPanel implements ActionListener {
                 b.paint(g2d);
             }
 
-            g2d.drawString("Position: " + player.getX() + " - " + player.getY() + " - DY: " + player.getDY() + " - DX: " + player.getDX(), 5, 15);
+            g2d.drawString("Position: " + player.getX() + " - " + player.getY() + " - DY: " + player.getDY() + " - DX: " + player.getDX() + " - Speed: " + speed, 5, 15);
 
         } else {
             String msg = "Game Over";
@@ -120,14 +111,22 @@ public class Board extends JPanel implements ActionListener {
 
 
     public void actionPerformed(ActionEvent e) {
-
-
-        //ArrayList ms = craft.getMissiles();
         player.move();
-        for (int i = 0; i < aliens.size(); ++i) {
-            Alien a = (Alien) aliens.get(i);
-            a.move();
+        for (int i = 0; i < buildings.size(); ++i) {
+            Building b = (Building) buildings.get(i);
+            b.move();
         }
+
+        Building b = (Building) buildings.get(buildings.size()-1);
+        // Add new building if last one completely visible
+        if(b.getX() + b.getWidth() < getWidth()) {
+            addBuilding();
+        }
+
+        // Increase speed
+        if(speed < 4)
+            speed += 0.0004;
+
         checkCollisions();
         repaint();  
     }
@@ -136,31 +135,27 @@ public class Board extends JPanel implements ActionListener {
 
         Rectangle r3 = player.getBounds();
 
-        /*for (int j = 0; j<aliens.size(); j++) {
-            Alien a = (Alien) aliens.get(j);
-            Rectangle r2 = a.getBounds();
-
-            if (r3.intersects(r2)) {
-                ingame = false;
-            }
-        }*/
-
-        int playerY = player.getY() - player.getHeight();
         for (int i = 0; i < buildings.size(); ++i) {
             Building b = (Building) buildings.get(i);
-            if(player.getDY() > 0 && playerY < b.getY() && player.getX() + player.getWidth() >= b.getX() && player.getX() <= b.getX() + b.getWidth()) {
-                player.setY(b.getY()-player.getHeight() - 1);
-                player.setMidair(false);
+            if(player.intersects(b.getItem())) {
+                player.setDY(0.0);
+                player.setY(b.getY() - player.getHeight() + 1);
             }
-            if(player.getX() + player.getWidth() >= b.getX() && player.getX() <= b.getX() + b.getWidth()) {
-                player.setMidair(true);
-            }
-
         }
+    }
+
+    public void stopGame() {
+        ingame = false;
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public static int getRandom(int from, int to) {
+        int diff = to - from;
+        double random = Math.random();
+        return from + (int)(diff * random);
     }
 
 

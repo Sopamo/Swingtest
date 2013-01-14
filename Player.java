@@ -7,14 +7,10 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-public class Player {
+public class Player extends Item {
 	private String graphic = "craft.png";
     private double dx;
     private double dy;
-    private double x;
-    private double y;
-    private int width;
-    private int height;
     private boolean midair;
     private boolean visible;
     private Image image;
@@ -23,11 +19,10 @@ public class Player {
 	public Player() {
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
         image = ii.getImage();
-        width = image.getWidth(null);
-        height = image.getHeight(null);
-        x = 10;
-        y = 0;
-        this.midair = false;
+        setWidth(image.getWidth(null));
+        setHeight(image.getHeight(null));
+        setX(10);
+        setY(0);
         Player.instance = this;
 	}
 
@@ -36,17 +31,19 @@ public class Player {
     }
 
 	public void move() {
-        x += dx;
-        y += dy;
+        setY(dy + (int)getY());
+        setX(dx + (int)getX());
 
         recalculateDY();
 
-        if (x < 1) {
-            x = 1;
+        if (getX() < 1) {
+            setX(1);
         }
-        if (y - 2*height > Collision.height) {
-            this.setMidair(false);
-            y = Collision.height - 2* height;
+        if(getX() > Collision.width) {
+            setX(Collision.width);
+        }
+        if (getY() > Collision.height) {
+            Board.getInstance().stopGame();
         }
     }
 
@@ -56,7 +53,6 @@ public class Player {
 
         if (key == KeyEvent.VK_SPACE) {
             dy = -5;
-            this.setMidair(true);
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -81,33 +77,15 @@ public class Player {
     }
 
     public void recalculateDY() {
-    	if(this.midair)
-    		dy += 0.81/10;
+    	dy += 0.81/10;
     }
 
     public void setMidair(boolean midair) {
-        if(!midair) this.dy = 0;
         this.midair = midair;
     }
 
-    public int getX() {
-        return (int)x;
-    }
-
-    public int getY() {
-        return (int)y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getHeight() {
-        return (int) this.height;
-    }
-
-    public int getWidth() {
-        return (int) this.width;
+    public void setDY(double dy) {
+        this.dy = dy;
     }
 
     public double getDY() {
@@ -123,6 +101,6 @@ public class Player {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int)x, (int)y, width, height);
+        return new Rectangle((int)getX(), (int)getY(), getWidth(), getHeight());
     }
 }
