@@ -62,7 +62,7 @@ public class Building extends Item {
 	
 	public void spawnBirds() {
 		int quantity = Board.getRandom(10,50);
-		int lastX	 = 42;
+		int lastX	 = getX();
 		
 		for(int i = 0; i <= 5; ++i) {
 				
@@ -70,7 +70,7 @@ public class Building extends Item {
 			
 			if(lastX + 5 > getWidth()) break;
 			
-			Bird b = new Bird(lastX, getHeight());
+			Bird b = new Bird(lastX, getY()-20);
 			
 			birds.add(b);	
 		
