@@ -158,7 +158,7 @@ public class Board extends JPanel implements ActionListener {
             for(int j = 0; j < obstacles.size(); ++j) {
                 Obstacle o = (Obstacle) obstacles.get(j);
                 if(o.isActive()) {
-                    if(player.intersects(o.getItem()) && speed >= 0) {
+                    if(player.intersects(o.getItem()) && speed >= 0.5) {
                         o.deactivate();
                         speed -= 0.5;
                     }
