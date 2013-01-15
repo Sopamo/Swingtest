@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class Player extends Item {
-	private String graphic = "craft.png";
+	private String graphic = "player.png";
     private double dx;
     private double dy;
     private boolean midair;
