@@ -25,6 +25,7 @@ public class Board extends JPanel implements ActionListener {
     private Player player;
     private ArrayList buildings;
     private boolean ingame;
+    private String endgameMessage = "";
     private int B_WIDTH;
     private int B_HEIGHT;
     private static Board instance;
@@ -95,7 +96,7 @@ public class Board extends JPanel implements ActionListener {
             g2d.drawString("Position: " + player.getX() + " - " + player.getY() + " - DY: " + player.getDY() + " - DX: " + player.getDX() + " - Speed: " + speed, 5, 15);
 
         } else {
-            String msg = "Game Over";
+            String msg = "Game Over - " + endgameMessage;
             Font small = new Font("Helvetica", Font.BOLD, 14);
             FontMetrics metr = this.getFontMetrics(small);
 
@@ -138,8 +139,16 @@ public class Board extends JPanel implements ActionListener {
         for (int i = 0; i < buildings.size(); ++i) {
             Building b = (Building) buildings.get(i);
             if(player.intersects(b.getItem())) {
-                player.setDY(0.0);
-                player.setY(b.getY() - player.getHeight() + 1);
+                if(player.getX() < b.getX())
+                {
+                    endgameMessage = "You hit a building.";
+                    stopGame();
+                }
+                else
+                {
+                    player.setDY(0.0);
+                    player.setY(b.getY() - player.getHeight() + 1);
+                }
             }
         }
     }
