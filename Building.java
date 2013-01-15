@@ -65,11 +65,11 @@ public class Building extends Item {
 		
 		for(int i = 0; i <= 5; ++i) {
 				
-			lastX += 2;
+			lastX += Board.getRandom(40,200);
 			
 			if(lastX + 5 > getWidth()) break;
 			
-			Bird b = new Bird(lastX, (int)getY()-5);
+			Bird b = new Bird(lastX, (int)getY()+5);
 			
 			birds.add(b);	
 		
@@ -82,9 +82,9 @@ public class Building extends Item {
 	
 	public void paintBirds(Graphics g) {
 		
-		for(int i=0; i<=birds.size();++i) {
+		for(int i=0; i< birds.size();++i) {
 			Bird b = (Bird) birds.get(i);
-			g.drawImage(b.getImage(), b.getX(), b.getY(), Board.getInstance());
+			g.drawImage(b.getImage(), (int)b.getX(), (int)b.getY(), Board.getInstance());
 		}	
 	
 	
