@@ -72,7 +72,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void addBuilding() {
-        Building b = new Building(getRandom(200,500), 500, getWidth()+getRandom(50,200), getRandom(200,350));
+        Building b = new Building(getRandom(300,1000), 500, getWidth()+getRandom(50,200), getRandom(300,450));
         b.spawnObstacles();
 		b.spawnBirds();
         this.buildings.add(b);

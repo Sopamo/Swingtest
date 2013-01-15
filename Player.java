@@ -11,6 +11,7 @@ public class Player extends Item {
 	private String graphic = "player.png";
     private String graphicRunning = "player_running.png";
     private int imageStatus = 1;
+    private int ticker = 1;
     private double dx;
     private double dy;
     private boolean midair;
@@ -40,6 +41,10 @@ public class Player extends Item {
         setX(dx + (int)getX());
 
         recalculateDY();
+        ticker = (ticker+1) % 30;
+        if(ticker == 0) {
+            imageStatus = (imageStatus + 1)%2;
+        }
 
         if (getX() < 1) {
             setX(1);
@@ -50,6 +55,10 @@ public class Player extends Item {
         if (getY() > Collision.height) {
             Board.getInstance().stopGame();
         }
+    }
+
+    public int getImageStatus() {
+        return imageStatus;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -102,7 +111,7 @@ public class Player extends Item {
     }
 
     public Image getImage() {
-        return image;
+        return (imageStatus == 1) ? image : imageRunning;
     }
 
     public Rectangle getBounds() {
