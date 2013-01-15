@@ -61,16 +61,21 @@ public class Building extends Item {
 	}
 	
 	public void spawnBirds() {
-		int quantity = Board.getRandom(10,50);
-		int lastX	 = getX();
+		int lastX	 = (int)getX();
+		if(Board.getRandom(0,2) == 1) return;
 		
-		for(int i = 0; i <= 5; ++i) {
+		
+		for(int i = 0;; ++i) {
 				
-			lastX += 1;
+			lastX += Board.getRandom(10,30);
 			
-			if(lastX + 5 > getWidth()) break;
+			if(lastX > getWidth() + getX() - 10) {
+				System.out.println("Bird NOT");
+				break;
+			}
+			System.out.println("BIRD");
 			
-			Bird b = new Bird(lastX, getY()-20);
+			Bird b = new Bird(lastX, (int)getY() -10);
 			
 			birds.add(b);	
 		
