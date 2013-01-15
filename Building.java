@@ -18,6 +18,7 @@ public class Building extends Item {
 	public void move() {
 		setX(getX() - Board.getInstance().getSpeed());
 		moveObstacles();
+		moveBirds();
 	}
 
 	public void paintComplete(Graphics g) {
@@ -61,15 +62,15 @@ public class Building extends Item {
 	
 	public void spawnBirds() {
 		int quantity = Board.getRandom(10,50);
-		int lastX	 = 0;
+		int lastX	 = 42;
 		
 		for(int i = 0; i <= 5; ++i) {
 				
-			lastX += Board.getRandom(40,200);
+			lastX += 1;
 			
 			if(lastX + 5 > getWidth()) break;
 			
-			Bird b = new Bird(lastX, (int)getY()+5);
+			Bird b = new Bird(lastX, getHeight());
 			
 			birds.add(b);	
 		
@@ -77,8 +78,13 @@ public class Building extends Item {
 		}
 	}
 	
+	public void moveBirds() {
+		for(int i=0; i< birds.size();++i) {
+			Bird b = (Bird) birds.get(i);
+			b.move();
+		}	
 	
-	
+	}	
 	
 	public void paintBirds(Graphics g) {
 		

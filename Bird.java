@@ -23,6 +23,9 @@ public class Bird extends Item {
 		return image;
 	}
 
+	public void move() {
+		setX(getX() - Board.getInstance().getSpeed());
+	}
 
 
 
