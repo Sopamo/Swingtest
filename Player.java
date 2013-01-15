@@ -9,16 +9,21 @@ import javax.swing.ImageIcon;
 
 public class Player extends Item {
 	private String graphic = "player.png";
+    private String graphicRunning = "player_running.png";
+    private int imageStatus = 1;
     private double dx;
     private double dy;
     private boolean midair;
     private boolean visible;
     private Image image;
+    private Image imageRunning;
     private static Player instance;
 
 	public Player() {
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
         image = ii.getImage();
+        ImageIcon i2 = new ImageIcon(this.getClass().getResource(graphicRunning));
+        imageRunning = i2.getImage();
         setWidth(image.getWidth(null));
         setHeight(image.getHeight(null));
         setX(10);
