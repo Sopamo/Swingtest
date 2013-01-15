@@ -72,7 +72,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void addBuilding() {
-        this.buildings.add(new Building(getRandom(200,500), 500, getWidth()+getRandom(50,200), getRandom(200,400)));
+        Building b = new Building(getRandom(200,500), 500, getWidth()+getRandom(50,200), getRandom(200,400));
+        b.spawnObstacles();
+        this.buildings.add(b);
     }
 
 
@@ -90,7 +92,7 @@ public class Board extends JPanel implements ActionListener {
 
             for(int i = 0; i<buildings.size();++i) {
                 Building b = (Building) buildings.get(i);
-                b.paint(g2d);
+                b.paintComplete(g2d);
             }
 
             g2d.drawString("Position: " + player.getX() + " - " + player.getY() + " - DY: " + player.getDY() + " - DX: " + player.getDX() + " - Speed: " + speed, 5, 15);
@@ -148,6 +150,17 @@ public class Board extends JPanel implements ActionListener {
                 {
                     player.setDY(0.0);
                     player.setY(b.getY() - player.getHeight() + 1);
+                }
+            }
+            // Check obstacles
+            ArrayList obstacles = b.getObstacles();
+            for(int j = 0; j < obstacles.size(); ++j) {
+                Obstacle o = (Obstacle) obstacles.get(j);
+                if(o.isActive()) {
+                    if(player.intersects(o.getItem())) {
+                        o.deactivate();
+                        speed -= 0.5;
+                    }
                 }
             }
         }
