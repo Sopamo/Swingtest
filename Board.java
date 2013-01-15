@@ -72,7 +72,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void addBuilding() {
-        Building b = new Building(getRandom(200,500), 500, getWidth()+getRandom(50,200), getRandom(200,400));
+        Building b = new Building(getRandom(200,500), 500, getWidth()+getRandom(50,200), getRandom(200,350));
         b.spawnObstacles();
         this.buildings.add(b);
     }
@@ -141,7 +141,7 @@ public class Board extends JPanel implements ActionListener {
         for (int i = 0; i < buildings.size(); ++i) {
             Building b = (Building) buildings.get(i);
             if(player.intersects(b.getItem())) {
-                if(player.getX() < b.getX())
+                if(player.getX() < b.getX() && (player.getY() + player.getHeight() - 10) > b.getY())
                 {
                     endgameMessage = "You hit a building.";
                     stopGame();
