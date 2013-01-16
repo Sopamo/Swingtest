@@ -41,13 +41,13 @@ public class Building extends Item {
 	}
 
 	public void spawnObstacles() {
+		if(Board.getRandom(0,2) != 1) return;
 		int lastX = 0;
 		for(int i = 0; i <= Board.getRandom(0,2); ++i)
 		{
 			lastX += Board.getRandom(180,300);
 			if(lastX + 120 > getWidth()) break;
 			int currentX = lastX + (int) getX();
-			System.out.println(currentX);
 			Obstacle o = new Obstacle(20,20,currentX,(int) getY()-20);
 			this.obstacles.add(o);
 		}

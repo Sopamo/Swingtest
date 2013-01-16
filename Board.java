@@ -63,6 +63,10 @@ public class Board extends JPanel implements ActionListener {
         B_HEIGHT = getHeight();   
     }
 
+    public void setEndgameMessage(String message) {
+        endgameMessage = message;
+    }
+
     public double getSpeed() {
         return speed;
     }
@@ -120,9 +124,7 @@ public class Board extends JPanel implements ActionListener {
             doPaint = false;
         }
         Toolkit.getDefaultToolkit().sync();
-        g.dispose();
-
-        
+        g.dispose();        
     }
 
 
