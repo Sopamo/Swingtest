@@ -65,7 +65,8 @@ public class Building extends Item {
 		if(this.obstacles.size() == 0) return;
 		for(int i = 0; i < this.obstacles.size(); ++i) {
 			Obstacle o = (Obstacle) this.obstacles.get(i);
-			o.paint(g);
+			if(o.isVisible())
+				o.paint(g);
 		}
 	}
 	

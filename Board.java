@@ -163,17 +163,15 @@ public class Board extends JPanel implements ActionListener {
 		            player.setMidair(false);
                     player.setY(b.getY() - player.getHeight() + 1);
                 }
-
-
-
-	    }
+	       }
             // Check obstacles
             ArrayList obstacles = b.getObstacles();
             for(int j = 0; j < obstacles.size(); ++j) {
                 Obstacle o = (Obstacle) obstacles.get(j);
                 if(o.isActive()) {
-                    if(player.intersects(o.getItem())) {
+                    if(player.intersects(o.getItem()) && player.getX() + 10 >= o.getX()) {
                         o.deactivate();
+                        o.attachWings();
                         setSpeed(getSpeed()-0.5);
                     }
                 }
