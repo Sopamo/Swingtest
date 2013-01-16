@@ -184,10 +184,15 @@ public class Board extends JPanel implements ActionListener {
                 }
             }
 
-	    // Birds !!!!!!11
-	    if(player.intersects(b.getHitbox())) {
-		b.flyBirds();
-	    }
+			// Birds !!!!!!!!
+			if(player.intersects(b.getHitbox())) {
+				ArrayList bi = b.getBirds();
+				for(int j=0;j < bi.size();++j) {
+					Bird bir = (Bird) bi.get(j);
+					
+					bir.setProperties(Bird.FLYING);
+				}
+			}
         }
     }
 

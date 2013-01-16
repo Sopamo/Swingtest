@@ -5,9 +5,12 @@ import javax.swing.ImageIcon;
 
 public class Bird extends Item {
 
+	public final static 		BirdProperties SITTING = BirdProperties.SITTING,
+								FLYING	= BirdProperties.FLYING;
+
 	private String graphic = "bird.png";
 	private Image image;
-	
+	private BirdProperties properties;
 	
 	public Bird(int x, int y) {
 		ImageIcon i = new ImageIcon(this.getClass().getResource(graphic));
@@ -16,8 +19,18 @@ public class Bird extends Item {
 		setWidth(image.getWidth(null));
 		setHeight(image.getHeight(null));
 		
+		setProperties(SITTING);
+		
 		setX(x);
 		setY(y);
+	}
+	
+	public BirdProperties getProperties() {
+		return properties;
+	}
+	
+	public void setProperties(BirdProperties b) {
+		properties = b;
 	}
 
 	public Image getImage() {
@@ -35,8 +48,8 @@ public class Bird extends Item {
 	public void fly() {
 		double lastX = getX();
 		double lastY = getY();
-		lastX += Board.getInstance().getSpeed();
-		lastY -= Board.getInstance().getSpeed();		
+		lastX += Board.getRandom(-1,5);
+		lastY -= Board.getRandom(0,10)/5;		
 		setX(lastX);
 		setY(lastY);
 		

@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 public class Building extends Item {
 
-    	private ArrayList obstacles;
+    private ArrayList obstacles;
 	private ArrayList birds;
 
 	public Building(int width, int height, int x, int y) {
@@ -20,6 +20,7 @@ public class Building extends Item {
 		setX(getX() - Board.getInstance().getSpeed());
 		moveObstacles();
 		moveBirds();
+		flyBirds();
 	}
 
 	public void paintComplete(Graphics g) {
@@ -105,7 +106,7 @@ public class Building extends Item {
 
 		for(int i=0;i<birds.size();++i) {
 			Bird b = (Bird) birds.get(i);
-			b.fly();
+			if(b.getProperties() == Bird.FLYING) b.fly();
 		}
 	}	
 	
