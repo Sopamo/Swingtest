@@ -215,6 +215,9 @@ public class Board extends JPanel implements ActionListener {
 
         public void keyReleased(KeyEvent e) {
             player.keyReleased(e);
+            if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                Collision.getInstance().restartGame();
+            }
         }
 
         public void keyPressed(KeyEvent e) {
