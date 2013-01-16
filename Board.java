@@ -31,6 +31,7 @@ public class Board extends JPanel implements ActionListener {
     private static Board instance;
     private double points = 0;
     private double speed;
+    private boolean doPaint;
 
     public Board() {
         addKeyListener(new TAdapter());
@@ -48,6 +49,7 @@ public class Board extends JPanel implements ActionListener {
         timer = new Timer(5, this);
         timer.start();
         this.speed = 1;
+        doPaint = true;
         Board.instance = this;
     }
 
@@ -105,9 +107,9 @@ public class Board extends JPanel implements ActionListener {
 
             g2d.drawString("Position: " + (int)player.getX() + " - " + (int)player.getY() + " - DY: " + (int)player.getDY() + " - DX: " + (int)player.getDX() + " - Speed: " + speed, 5, 15);
             g2d.drawString("Points: " + (int)points, getWidth()-100, 15);
-
+            
         } else {
-            String msg = "Game Over - " + endgameMessage;
+            String msg = "Game Over - You scored " + (int)points + " Points - " + endgameMessage;
             Font small = new Font("Helvetica", Font.BOLD, 14);
             FontMetrics metr = this.getFontMetrics(small);
 
@@ -115,10 +117,12 @@ public class Board extends JPanel implements ActionListener {
             g.setFont(small);
             g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2,
                          B_HEIGHT / 2);
+            doPaint = false;
         }
-
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
+
+        
     }
 
 
@@ -142,7 +146,8 @@ public class Board extends JPanel implements ActionListener {
             setSpeed(getSpeed()+0.0010);
 
         checkCollisions();
-        repaint();  
+        if(doPaint)
+            repaint();  
     }
 
     public void checkCollisions() {

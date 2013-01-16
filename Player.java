@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 public class Player extends Item {
 	private String graphic = "player.png";
     private String graphicRunning = "player_running.png";
+    private String graphicJumping = "player_jumping.png";
     private int imageStatus = 1;
     private int ticker = 1;
     private double dx;
@@ -18,6 +19,7 @@ public class Player extends Item {
     private boolean visible;
     private Image image;
     private Image imageRunning;
+    private Image imageJumping;
     private static Player instance;
 
 	public Player() {
@@ -25,6 +27,8 @@ public class Player extends Item {
         image = ii.getImage();
         ImageIcon i2 = new ImageIcon(this.getClass().getResource(graphicRunning));
         imageRunning = i2.getImage();
+        ImageIcon i3 = new ImageIcon(this.getClass().getResource(graphicJumping));
+        imageJumping = i3.getImage();
         setWidth(image.getWidth(null));
         setHeight(image.getHeight(null));
         setX(30);
@@ -112,10 +116,11 @@ public class Player extends Item {
     }
 
     public boolean getMidair() {
-	return midair;
+	   return midair;
     }
 
     public Image getImage() {
+        if(getMidair()) return imageJumping;
         return (imageStatus == 1) ? image : imageRunning;
     }
 
