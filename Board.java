@@ -45,12 +45,14 @@ public class Board extends JPanel implements ActionListener {
         player = new Player();
 
         initBuildings();
+		
 
         timer = new Timer(5, this);
         timer.start();
         this.speed = 1;
         doPaint = true;
         Board.instance = this;
+		
     }
 
     public static Board getInstance() {
@@ -94,6 +96,8 @@ public class Board extends JPanel implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
+		
+		if(!isFocusOwner()) requestFocus();
 
         if (ingame) {
 
@@ -129,7 +133,7 @@ public class Board extends JPanel implements ActionListener {
 
 
     public void actionPerformed(ActionEvent e) {
-        player.move();
+		player.move();
         for (int i = 0; i < buildings.size(); ++i) {
             Building b = (Building) buildings.get(i);
             b.move();
@@ -162,6 +166,7 @@ public class Board extends JPanel implements ActionListener {
                 if(player.getX() < b.getX() && (player.getY() + player.getHeight() - 10) > b.getY())
                 {
                     endgameMessage = "You hit a building.";
+					timer.stop();
                     stopGame();
                 }
                 else
