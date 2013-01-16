@@ -35,8 +35,8 @@ public class Building extends Item {
 		int lastX = 0;
 		for(int i = 0; i <= Board.getRandom(0,2); ++i)
 		{
-			lastX += Board.getRandom(40,200);
-			if(lastX + 20 > getWidth()) break;
+			lastX += Board.getRandom(180,300);
+			if(lastX + 120 > getWidth()) break;
 			int currentX = lastX + (int) getX();
 			System.out.println(currentX);
 			Obstacle o = new Obstacle(20,20,currentX,(int) getY()-20);
@@ -95,7 +95,7 @@ public class Building extends Item {
 		
 		for(int i=0; i< birds.size();++i) {
 			Bird b = (Bird) birds.get(i);
-			g.drawImage(b.getImage(), (int)b.getX(), (int)b.getY(), Board.getInstance());
+			b.paint(g);
 		}	
 	
 	

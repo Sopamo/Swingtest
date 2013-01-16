@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 
@@ -27,7 +28,13 @@ public class Bird extends Item {
 		setX(getX() - Board.getInstance().getSpeed());
 	}
 
+	public void paint(Graphics g) {
+		g.drawImage(getImage(), (int)getX(), (int)getY(), Board.getInstance());
+	}
 
+	public void fly() {
+		return;
+	}
 
 
 }

@@ -64,6 +64,12 @@ public class Board extends JPanel implements ActionListener {
         return speed;
     }
 
+    public void setSpeed(double speed) {
+	if(speed < 0) return;
+
+	this.speed = speed;
+    }
+
     public void initBuildings() {
         this.buildings = new ArrayList();
         
@@ -72,7 +78,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void addBuilding() {
-        Building b = new Building(getRandom(300,1000), 500, getWidth()+getRandom(50,200), getRandom(300,450));
+        Building b = new Building(getRandom(300,1000), 500, getWidth()+getRandom(50,200), getRandom(300,420));
         b.spawnObstacles();
 		b.spawnBirds();
         this.buildings.add(b);
@@ -129,7 +135,7 @@ public class Board extends JPanel implements ActionListener {
 
         // Increase speed
         if(speed < 4)
-            speed += 0.0004;
+            setSpeed(getSpeed()+0.0010);
 
         checkCollisions();
         repaint();  
@@ -150,6 +156,7 @@ public class Board extends JPanel implements ActionListener {
                 else
                 {
                     player.setDY(0.0);
+		    player.setMidair(false);
                     player.setY(b.getY() - player.getHeight() + 1);
                 }
             }
@@ -158,9 +165,9 @@ public class Board extends JPanel implements ActionListener {
             for(int j = 0; j < obstacles.size(); ++j) {
                 Obstacle o = (Obstacle) obstacles.get(j);
                 if(o.isActive()) {
-                    if(player.intersects(o.getItem()) && speed >= 0.5) {
+                    if(player.intersects(o.getItem())) {
                         o.deactivate();
-                        speed -= 0.5;
+                        setSpeed(getSpeed()-0.5);
                     }
                 }
             }

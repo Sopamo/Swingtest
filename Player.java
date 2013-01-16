@@ -27,7 +27,7 @@ public class Player extends Item {
         imageRunning = i2.getImage();
         setWidth(image.getWidth(null));
         setHeight(image.getHeight(null));
-        setX(10);
+        setX(30);
         setY(0);
         Player.instance = this;
 	}
@@ -65,8 +65,9 @@ public class Player extends Item {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_SPACE) {
-            dy = -5;
+        if (key == KeyEvent.VK_SPACE && !getMidair()) {
+            dy = -4;
+	    setMidair(true);
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -108,6 +109,10 @@ public class Player extends Item {
 
     public double getDX() {
         return (double) this.dx;
+    }
+
+    public boolean getMidair() {
+	return midair;
     }
 
     public Image getImage() {
