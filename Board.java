@@ -29,6 +29,7 @@ public class Board extends JPanel implements ActionListener {
     private int B_WIDTH;
     private int B_HEIGHT;
     private static Board instance;
+    private double points = 0;
     private double speed;
 
     public Board() {
@@ -102,7 +103,8 @@ public class Board extends JPanel implements ActionListener {
                 b.paintComplete(g2d);
             }
 
-            g2d.drawString("Position: " + player.getX() + " - " + player.getY() + " - DY: " + player.getDY() + " - DX: " + player.getDX() + " - Speed: " + speed, 5, 15);
+            g2d.drawString("Position: " + (int)player.getX() + " - " + (int)player.getY() + " - DY: " + (int)player.getDY() + " - DX: " + (int)player.getDX() + " - Speed: " + speed, 5, 15);
+            g2d.drawString("Points: " + (int)points, getWidth()-100, 15);
 
         } else {
             String msg = "Game Over - " + endgameMessage;
@@ -133,6 +135,8 @@ public class Board extends JPanel implements ActionListener {
             addBuilding();
         }
 
+        points += 0.1 * speed;
+
         // Increase speed
         if(speed < 4)
             setSpeed(getSpeed()+0.0010);
@@ -156,7 +160,7 @@ public class Board extends JPanel implements ActionListener {
                 else
                 {
                     player.setDY(0.0);
-		    player.setMidair(false);
+		            player.setMidair(false);
                     player.setY(b.getY() - player.getHeight() + 1);
                 }
             }
