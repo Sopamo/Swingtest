@@ -33,7 +33,14 @@ public class Bird extends Item {
 	}
 
 	public void fly() {
-		return;
+		double lastX = getX();
+		double lastY = getY();
+		lastX += Board.getInstance().getSpeed();
+		lastY -= Board.getInstance().getSpeed();		
+		setX(lastX);
+		setY(lastY);
+		
+		
 	}
 
 

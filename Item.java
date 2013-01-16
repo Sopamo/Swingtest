@@ -50,6 +50,11 @@ public class Item {
 		Rectangle r2 = new Rectangle((int)item.getX(),(int)item.getY(),item.getWidth(),item.getHeight());
 		return r1.intersects(r2);
 	}
+	
+	public boolean intersects(Rectangle r) {
+		Rectangle s = new Rectangle((int)getX(),(int)getY(),getWidth(),getHeight());
+		return s.intersects(r);
+	}
 
 	public Item getItem() {
 		return this;

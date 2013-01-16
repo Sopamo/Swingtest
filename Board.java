@@ -163,7 +163,10 @@ public class Board extends JPanel implements ActionListener {
 		            player.setMidair(false);
                     player.setY(b.getY() - player.getHeight() + 1);
                 }
-            }
+
+
+
+	    }
             // Check obstacles
             ArrayList obstacles = b.getObstacles();
             for(int j = 0; j < obstacles.size(); ++j) {
@@ -175,6 +178,11 @@ public class Board extends JPanel implements ActionListener {
                     }
                 }
             }
+
+	    // Birds !!!!!!11
+	    if(player.intersects(b.getHitbox())) {
+		b.flyBirds();
+	    }
         }
     }
 

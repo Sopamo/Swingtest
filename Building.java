@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Building extends Item {
 
-    private ArrayList obstacles;
+    	private ArrayList obstacles;
 	private ArrayList birds;
 
 	public Building(int width, int height, int x, int y) {
@@ -29,6 +30,14 @@ public class Building extends Item {
 
 	public ArrayList getObstacles() {
 		return obstacles;
+	}
+
+	public ArrayList getBirds() {
+		return birds;
+	}
+
+	public Rectangle getHitbox() {
+		return new Rectangle((int)getX(), (int)getY(), getWidth(), getHeight()+ 200);
 	}
 
 	public void spawnObstacles() {
@@ -70,10 +79,9 @@ public class Building extends Item {
 			lastX += Board.getRandom(10,30);
 			
 			if(lastX > getWidth() + getX() - 10) {
-				System.out.println("Bird NOT");
 				break;
 			}
-			System.out.println("BIRD");
+			
 			
 			Bird b = new Bird(lastX, (int)getY() -10);
 			
@@ -89,6 +97,15 @@ public class Building extends Item {
 			b.move();
 		}	
 	
+	}
+
+	public void flyBirds() {
+		if(birds.size() == 0) return;
+
+		for(int i=0;i<birds.size();++i) {
+			Bird b = (Bird) birds.get(i);
+			b.fly();
+		}
 	}	
 	
 	public void paintBirds(Graphics g) {
