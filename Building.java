@@ -1,13 +1,19 @@
 import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Building extends Item {
 
     private ArrayList obstacles;
 	private ArrayList birds;
+	private String graphic = "building.png";
+	private Image image;
 
 	public Building(int width, int height, int x, int y) {
+		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
+        image = ii.getImage();
 		setWidth(width);
 		setHeight(height);
 		setX(x);
@@ -29,6 +35,15 @@ public class Building extends Item {
 		this.paintBirds(g);
 	}
 
+	public void paint(Graphics g) {
+		int graphicX = (int)getX();
+		while(graphicX <= getX() + getWidth())
+		{
+			g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
+			graphicX += 50;
+		}
+	}
+
 	public ArrayList getObstacles() {
 		return obstacles;
 	}
@@ -38,7 +53,7 @@ public class Building extends Item {
 	}
 
 	public Rectangle getHitbox() {
-		return new Rectangle((int)getX(), (int)getY(), getWidth(), getHeight()+ 200);
+		return new Rectangle((int)getX(), (int)getY() - 200, getWidth(), getHeight()+ 200);
 	}
 
 	public void spawnObstacles() {
