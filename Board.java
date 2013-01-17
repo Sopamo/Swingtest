@@ -165,7 +165,6 @@ public class Board extends JPanel implements ActionListener {
                 if(player.getX() < b.getX() && (player.getY() + player.getHeight() - 10) > b.getY())
                 {
                     endgameMessage = "You hit a building.";
-					timer.stop();
                     stopGame();
                 }
                 else
@@ -201,6 +200,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void stopGame() {
+        timer.stop();
         ingame = false;
     }
 
@@ -220,6 +220,7 @@ public class Board extends JPanel implements ActionListener {
         public void keyReleased(KeyEvent e) {
             player.keyReleased(e);
             if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                stopGame();
                 Collision.getInstance().restartGame();
             }
         }
