@@ -35,14 +35,14 @@ public class Building extends Item {
 		this.paintBirds(g);
 	}
 
-	public void paint(Graphics g) {
-		int graphicX = (int)getX();
-		for(int i = 0; i < getWidth() / 50; ++i)
-		{
-			g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
-			graphicX += 50;
-		}
-	}
+	//public void paint(Graphics g) {
+	//	int graphicX = (int)getX();
+	//	for(int i = 0; i < getWidth() / 50; ++i)
+	//	{
+	//		g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
+	//		graphicX += 50;
+	//	}
+	//}
 
 	public ArrayList getObstacles() {
 		return obstacles;

@@ -32,7 +32,7 @@ public class Player extends Item {
         setWidth(image.getWidth(null));
         setHeight(image.getHeight(null));
         setX(30);
-        setY(0);
+        setY(300);
         Player.instance = this;
 	}
 
@@ -87,7 +87,7 @@ public class Player extends Item {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE && !getMidair()) {
-            dy = -4;
+            dy = -4 * Board.getInstance().getGravity();
 	        setMidair(true);
         }
 
@@ -98,6 +98,10 @@ public class Player extends Item {
         if (key == KeyEvent.VK_RIGHT) {
             dx = 2;
         }
+		if (key == KeyEvent.VK_E) {
+			int g = Board.getInstance().getGravity() * -1;
+			Board.getInstance().setGravity(g);
+		}
     }
 
     public void keyReleased(KeyEvent e) {
@@ -113,7 +117,7 @@ public class Player extends Item {
     }
 
     public void recalculateDY() {
-    	dy += 0.81/10;
+    	dy += 0.81/10 * Board.getInstance().getGravity();
     }
 
     public void setMidair(boolean midair) {

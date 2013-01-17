@@ -32,6 +32,7 @@ public class Board extends JPanel implements ActionListener {
     private double points = 0;
     private double speed;
     private boolean doPaint;
+	private int gravity = -1;
 
     public Board() {
         addKeyListener(new TAdapter());
@@ -76,11 +77,20 @@ public class Board extends JPanel implements ActionListener {
 	   if(speed < 0) return;
 	   this.speed = speed;
     }
+	
+	public int getGravity() {
+		return gravity;
+	}
+	
+	public void setGravity(int g) {
+		gravity = g;
+	}
 
     public void initBuildings() {
         this.buildings = new ArrayList();
-        this.buildings.add(new Building(500, 500, 0, 300));
-        this.buildings.add(new Building(500, 500, 600, 400));
+        //this.buildings.add(new Building(500, 500, 0, 300));
+        //this.buildings.add(new Building(500, 500, 600, 400));
+		this.buildings.add(new Building(500, 500,0, -400));
     }
 
     public void addBuilding() {
@@ -158,16 +168,24 @@ public class Board extends JPanel implements ActionListener {
     public void checkCollisions() {
 
         Rectangle r3 = player.getBounds();
+		
 
         for (int i = 0; i < buildings.size(); ++i) {
             Building b = (Building) buildings.get(i);
             if(player.intersects(b.getItem())) {
-                if(player.getY() + player.getHeight() - 10 > b.getY())
+				boolean check_top = player.getY() + player.getHeight() - 10 > b.getY();
+				boolean check_bottom = player.getY() < b.getY()+b.getHeight()-10;
+                if(check_top && check_bottom)
                 {
                     endgameMessage = "You hit a building.";
                     stopGame();
                 }
-                else
+				else if(check_top) {
+					player.setDY(0.0);
+		            player.setMidair(false);
+                    player.setY(b.getY() + b.getHeight() -1);
+				}
+				else if(check_bottom)
                 {
                     player.setDY(0.0);
 		            player.setMidair(false);
