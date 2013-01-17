@@ -162,7 +162,7 @@ public class Board extends JPanel implements ActionListener {
         for (int i = 0; i < buildings.size(); ++i) {
             Building b = (Building) buildings.get(i);
             if(player.intersects(b.getItem())) {
-                if(player.getX() < b.getX() && (player.getY() + player.getHeight() - 10) > b.getY())
+                if(player.getY() + player.getHeight() - 10 > b.getY())
                 {
                     endgameMessage = "You hit a building.";
                     stopGame();
