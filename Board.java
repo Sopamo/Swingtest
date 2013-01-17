@@ -45,7 +45,6 @@ public class Board extends JPanel implements ActionListener {
         player = new Player();
 
         initBuildings();
-		
 
         timer = new Timer(5, this);
         timer.start();
@@ -74,14 +73,12 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void setSpeed(double speed) {
-	if(speed < 0) return;
-
-	this.speed = speed;
+	   if(speed < 0) return;
+	   this.speed = speed;
     }
 
     public void initBuildings() {
         this.buildings = new ArrayList();
-        
         this.buildings.add(new Building(500, 500, 0, 300));
         this.buildings.add(new Building(500, 500, 600, 400));
     }
@@ -89,7 +86,7 @@ public class Board extends JPanel implements ActionListener {
     public void addBuilding() {
         int buildingWidth = getRandom(300,1000);
         buildingWidth += 50 - (buildingWidth % 50);
-        Building b = new Building(buildingWidth, 500, getWidth()+getRandom(50,200), getRandom(300,420));
+        Building b = new Building(buildingWidth, 500, getWidth()+getRandom(50,250), getRandom(290,420));
         b.spawnObstacles();
 		b.spawnBirds();
         this.buildings.add(b);
@@ -99,14 +96,19 @@ public class Board extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
 		
-		if(!isFocusOwner()) requestFocus();
+		if(!isFocusOwner()) {
+            requestFocus();
+        }   
+        Font small = new Font("VT323-Regular", Font.PLAIN, 22);
+        FontMetrics metr = this.getFontMetrics(small);
 
+        g.setColor(Color.white);
+        g.setFont(small);
         if (ingame) {
 
             Graphics2D g2d = (Graphics2D)g;
             
             g2d.drawImage(player.getImage(), (int)player.getX(), (int)player.getY(), this);
-
 
             g2d.setColor(Color.WHITE);
 
@@ -115,18 +117,13 @@ public class Board extends JPanel implements ActionListener {
                 b.paintComplete(g2d);
             }
 
-            g2d.drawString("Position: " + (int)player.getX() + " - " + (int)player.getY() + " - DY: " + (int)player.getDY() + " - DX: " + (int)player.getDX() + " - Speed: " + speed, 5, 15);
-            g2d.drawString("Points: " + (int)points, getWidth()-100, 15);
+            //g2d.drawString("Position: " + (int)player.getX() + " - " + (int)player.getY() + " - DY: " + (int)player.getDY() + " - DX: " + (int)player.getDX() + " - Speed: " + speed, 5, 15);
+            g2d.drawString("Points: " + (int)points, getWidth()-150, 30);
             
         } else {
             String msg = "Game Over - You scored " + (int)points + " Points - " + endgameMessage;
-            Font small = new Font("Helvetica", Font.BOLD, 14);
-            FontMetrics metr = this.getFontMetrics(small);
-
-            g.setColor(Color.white);
-            g.setFont(small);
-            g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2,
-                         B_HEIGHT / 2);
+            
+            g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
             doPaint = false;
         }
         Toolkit.getDefaultToolkit().sync();
@@ -186,7 +183,7 @@ public class Board extends JPanel implements ActionListener {
                     if(player.intersects(o.getItem()) && player.getX() + 10 >= o.getX()) {
                         o.deactivate();
                         o.attachWings();
-                        setSpeed(getSpeed()-0.5);
+                        setSpeed(getSpeed()-1);
                     }
                 }
             }

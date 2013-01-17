@@ -37,7 +37,7 @@ public class Building extends Item {
 
 	public void paint(Graphics g) {
 		int graphicX = (int)getX();
-		while(graphicX <= getX() + getWidth())
+		for(int i = 0; i < getWidth() / 50; ++i)
 		{
 			g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
 			graphicX += 50;
