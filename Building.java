@@ -20,6 +20,15 @@ public class Building extends Item {
 		setY(y);
 		this.obstacles = new ArrayList();
 		birds = new ArrayList();
+		spawnObstacles();
+		spawnBirds();
+	}
+
+	public Building() {
+		this(0, 500, Board.getInstance().getWidth()+Board.getRandom(50,250), Board.getRandom(290,420));
+		int buildingWidth = Board.getRandom(300,1000);
+        buildingWidth += 50 - (buildingWidth % 50);
+        this.setWidth(buildingWidth);
 	}
 
 	public void move() {

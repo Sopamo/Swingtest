@@ -13,8 +13,6 @@ public class Player extends Item {
     private String graphicJumping = "player_jumping.png";
     private int imageStatus = 1;
     private double ticker = 1;
-    private double dx;
-    private double dy;
     private boolean midair;
     private boolean visible;
     private Image image;
@@ -41,8 +39,8 @@ public class Player extends Item {
     }
 
 	public void move() {
-        setY(dy + (int)getY());
-        setX(dx + (int)getX());
+        setY(getDY() + (int)getY());
+        setX(getDX() + (int)getX());
 
         recalculateDY();
 
@@ -87,16 +85,16 @@ public class Player extends Item {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE && !getMidair()) {
-            dy = -4 * Board.getInstance().getGravity();
+            setDY(-4 * Board.getInstance().getGravity());
 	        setMidair(true);
         }
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = -2;
+            setDX(-2);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 2;
+            setDX(2);
         }
 		if (key == KeyEvent.VK_E) {
 			int g = Board.getInstance().getGravity() * -1;
@@ -108,32 +106,20 @@ public class Player extends Item {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
+            setDX(0);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
+            setDX(0);
         }
     }
 
     public void recalculateDY() {
-    	dy += 0.81/10 * Board.getInstance().getGravity();
+    	setDY(getDY() + 0.81/10 * Board.getInstance().getGravity());
     }
 
     public void setMidair(boolean midair) {
         this.midair = midair;
-    }
-
-    public void setDY(double dy) {
-        this.dy = dy;
-    }
-
-    public double getDY() {
-        return (double) this.dy;
-    }
-
-    public double getDX() {
-        return (double) this.dx;
     }
 
     public boolean getMidair() {

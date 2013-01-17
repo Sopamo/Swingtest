@@ -12,6 +12,8 @@ public class Item {
 	private double y;
 	private int width;
 	private int height;
+	private double dx;
+    private double dy;
 
 	public double getX() {
 		return x;
@@ -44,6 +46,22 @@ public class Item {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
+	public void setDX(double dx) {
+		this.dx = dx;
+	}
+
+	public void setDY(double dy) {
+        this.dy = dy;
+    }
+
+    public double getDY() {
+        return (double) this.dy;
+    }
+
+    public double getDX() {
+        return (double) this.dx;
+    }
 
 	public boolean intersects(Item item) {
 		Rectangle r1 = new Rectangle((int)getX(),(int)getY(),getWidth(),getHeight());
