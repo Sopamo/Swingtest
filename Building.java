@@ -21,6 +21,7 @@ public class Building extends Item {
 		setY(y);
 		obstacles = new ArrayList();
 		birds = new ArrayList();
+		setOrientation(1);
 		
 	}
 
@@ -33,6 +34,7 @@ public class Building extends Item {
         if(Board.getRandom(0,2) == 1) {
         	this.setX(getX());
         	this.setY(500-getY()-getHeight());
+        	this.setOrientation(-1);
         }
 	}
 
@@ -79,8 +81,14 @@ public class Building extends Item {
 			lastX += Board.getRandom(180,300);
 			if(lastX + 120 > getWidth()) break;
 			int currentX = lastX + (int) getX();
-			Obstacle o = new Obstacle(20,20,currentX,(int) getY()-20);
-			this.obstacles.add(o);
+			if(getOrientation() == -1) {
+				Obstacle o = new Obstacle(20,20,currentX,(int) getY()+getHeight());
+				this.obstacles.add(o);
+			} else {
+				Obstacle o = new Obstacle(20,20,currentX,(int) getY()-20);
+				this.obstacles.add(o);
+			}
+			
 		}
 	}
 
@@ -115,10 +123,15 @@ public class Building extends Item {
 				break;
 			}
 			
+			if(getOrientation() == -1) {
+				Bird b = new Bird(lastX, (int)getY() +getHeight());
+				birds.add(b);
+			} else {
+				Bird b = new Bird(lastX, (int)getY() -10);
+				birds.add(b);
+			}
 			
-			Bird b = new Bird(lastX, (int)getY() -10);
-			
-			birds.add(b);	
+				
 		
 		
 		}

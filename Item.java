@@ -14,7 +14,7 @@ public class Item {
 	private int height;
 	private double dx;
     private double dy;
-    private static int orienation = -1;
+    private int orienation = 1;
 
 	public double getX() {
 		return x;
@@ -64,11 +64,11 @@ public class Item {
         return (double) this.dx;
     }
 
-    public static int getOrientation() {
+    public int getOrientation() {
 		return orienation;
 	} 
 
-	public static void setOrientation(int or) {
+	public void setOrientation(int or) {
 		orienation = or;
 	}
 

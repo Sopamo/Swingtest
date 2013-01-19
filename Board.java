@@ -84,7 +84,6 @@ public class Board extends JPanel implements ActionListener {
 	
 	public void setGravity(int g) {
 		gravity = g;
-        Item.setOrientation(Item.getOrientation() * -1);
 	}
 
     public void initBuildings() {
