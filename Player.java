@@ -102,8 +102,7 @@ public class Player extends Item {
             setDX(2);
         }
 		if (key == KeyEvent.VK_E) {
-			int g = Board.getInstance().getGravity() * -1;
-			Board.getInstance().setGravity(g);
+			Board.getInstance().toggleGravity();
             setDY(-0.5);
 		}
     }

@@ -7,40 +7,50 @@ import javax.swing.ImageIcon;
 public class Building extends Item {
 
     private ArrayList obstacles;
+    private ArrayList powerups;
 	private ArrayList birds;
 	private String graphic = "building.png";
 	private Image image;
 	
 
 	public Building(int width, int height, int x, int y) {
+		if(width == 0)
+		{
+			width = Board.getRandom(300,1000);
+        	width += 50 - (width % 50);
+        	x = Board.getInstance().getWidth()+Board.getRandom(50,250);
+        	y = Board.getRandom(290,420);
+        	height = 500;
+		}
+
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
         image = ii.getImage();
 		setWidth(width);
 		setHeight(height);
 		setX(x);
 		setY(y);
-		obstacles = new ArrayList();
-		birds = new ArrayList();
 		setOrientation(1);
-		
-	}
-
-	public Building() {
-		this(0, 500, Board.getInstance().getWidth()+Board.getRandom(50,250), Board.getRandom(290,420));
-		int buildingWidth = Board.getRandom(300,1000);
-        buildingWidth += 50 - (buildingWidth % 50);
-        this.setWidth(buildingWidth);
-        
-        if(Board.getRandom(0,2) == 1) {
+		if(Board.getRandom(0,2) == 1) {
         	this.setX(getX());
         	this.setY(500-getY()-getHeight());
         	this.setOrientation(-1);
         }
+		obstacles = new ArrayList();
+		powerups = new ArrayList();
+		birds = new ArrayList();
+		spawnObstacles();
+		spawnPowerups();
+		spawnBirds();
+	}
+
+	public Building() {
+		this(0,0,0,0);
 	}
 
 	public void move() {
 		setX(getX() - Board.getInstance().getSpeed());
 		moveObstacles();
+		movePowerups();
 		moveBirds();
 		flyBirds();
 	}
@@ -48,6 +58,7 @@ public class Building extends Item {
 	public void paintComplete(Graphics g) {
 		this.paint(g);
 		this.paintObstacles(g);
+		this.paintPowerups(g);
 		this.paintBirds(g);
 	}
 
@@ -62,6 +73,10 @@ public class Building extends Item {
 
 	public ArrayList getObstacles() {
 		return obstacles;
+	}
+
+	public ArrayList getPowerups() {
+		return powerups;
 	}
 
 	public ArrayList getBirds() {
@@ -107,6 +122,36 @@ public class Building extends Item {
 			Obstacle o = (Obstacle) this.obstacles.get(i);
 			if(o.isVisible())
 				o.paint(g);
+		}
+	}
+
+	public void spawnPowerups() {
+		if(Board.getRandom(0,2) != 1) return;
+		int lastX = 0;
+		for(int i = 0; i <= Board.getRandom(0,1); ++i)
+		{
+			lastX += Board.getRandom(100,280);
+			if(lastX + 30 > getWidth()) break;
+			int currentX = lastX + (int) getX();
+			Powerup p = new Powerup(30,30,currentX,(int) getY()-30);
+			this.powerups.add(p);
+
+		}
+	}
+
+	public void movePowerups() {
+		if(this.powerups.size() == 0) return;
+		for(int i = 0; i < this.powerups.size(); ++i) {
+			Powerup p = (Powerup) this.powerups.get(i);	
+			p.move();
+		}
+	}
+
+	public void paintPowerups(Graphics g) {
+		if(this.powerups.size() == 0) return;
+		for(int i = 0; i < this.powerups.size(); ++i) {
+			Powerup p = (Powerup) this.powerups.get(i);	
+			p.paint(g);
 		}
 	}
 	

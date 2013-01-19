@@ -181,13 +181,13 @@ public class Board extends JPanel implements ActionListener {
 				else if(check_top) {
 					player.setDY(0.0);
 		            player.setMidair(false);
-                    player.setY(b.getY() + b.getHeight() -1);
+                    player.setY(b.getY() + b.getHeight());
 				}
 				else if(check_bottom)
                 {
                     player.setDY(0.0);
 		            player.setMidair(false);
-                    player.setY(b.getY() - player.getHeight() + 1);
+                    player.setY(b.getY() - player.getHeight());
                 }
 	       }
             // Check obstacles
@@ -203,6 +203,19 @@ public class Board extends JPanel implements ActionListener {
                 }
             }
 
+            // Check powerups
+            ArrayList powerups = b.getPowerups();
+            for(int j = 0; j < powerups.size(); ++j) {
+                Powerup p = (Powerup) powerups.get(j);
+                if(player.intersects(p.getItem()) && player.getX() + 5 >= p.getX()) {
+                    if(p.isActive())
+                    {    
+                        p.collide(); 
+                    }     
+                    p.deactivate();
+                }
+            }
+
 			// Birds !!!!!!!!
 			if(player.intersects(b.getHitbox())) {
 				ArrayList bi = b.getBirds();
@@ -213,6 +226,11 @@ public class Board extends JPanel implements ActionListener {
 				}
 			}
         }
+    }
+
+    public void toggleGravity() {
+        int g = Board.getInstance().getGravity() * -1;
+        Board.getInstance().setGravity(g);
     }
 
     public void stopGame() {
