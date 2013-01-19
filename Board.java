@@ -88,9 +88,7 @@ public class Board extends JPanel implements ActionListener {
 
     public void initBuildings() {
         this.buildings = new ArrayList();
-        //this.buildings.add(new Building(500, 500, 0, 300));
-        //this.buildings.add(new Building(500, 500, 600, 400));
-		this.buildings.add(new Building(500, 500,0, 400));
+		this.buildings.add(new Building(500, 600,0, 400));
     }
 
     public void addBuilding() {

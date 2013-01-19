@@ -20,7 +20,7 @@ public class Building extends Item {
         	width += 50 - (width % 50);
         	x = Board.getInstance().getWidth()+Board.getRandom(50,250);
         	y = Board.getRandom(290,420);
-        	height = 500;
+        	height = 600;
 		}
 
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
@@ -32,7 +32,7 @@ public class Building extends Item {
 		setOrientation(1);
 		if(Board.getRandom(0,2) == 1) {
         	this.setX(getX());
-        	this.setY(500-getY()-getHeight());
+        	this.setY(600-getY()-getHeight());
         	this.setOrientation(-1);
         }
 		obstacles = new ArrayList();
@@ -62,14 +62,14 @@ public class Building extends Item {
 		this.paintBirds(g);
 	}
 
-	//public void paint(Graphics g) {
-	//	int graphicX = (int)getX();
-	//	for(int i = 0; i < getWidth() / 50; ++i)
-	//	{
-	//		g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
-	//		graphicX += 50;
-	//	}
-	//}
+	public void paint(Graphics g) {
+		int graphicX = (int)getX();
+		for(int i = 0; i < getWidth() / 50; ++i)
+		{
+			g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
+			graphicX += 50;
+		}
+	}
 
 	public ArrayList getObstacles() {
 		return obstacles;
@@ -97,7 +97,7 @@ public class Building extends Item {
 			if(lastX + 120 > getWidth()) break;
 			int currentX = lastX + (int) getX();
 			if(getOrientation() == -1) {
-				Obstacle o = new Obstacle(20,20,currentX,(int) getY()+getHeight());
+				Obstacle o = new Obstacle(20,20,currentX,(int) getY()+getHeight()+1);
 				this.obstacles.add(o);
 			} else {
 				Obstacle o = new Obstacle(20,20,currentX,(int) getY()-20);

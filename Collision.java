@@ -2,8 +2,8 @@ import javax.swing.JFrame;
 
 public class Collision extends JFrame {
 
-    public static int width = 600;
-    public static int height = 500;
+    public static int width = 1000;
+    public static int height = 800;
     private Board activeBoard;
     private static Collision instance; 
 
