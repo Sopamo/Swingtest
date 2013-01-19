@@ -1,5 +1,7 @@
 import java.lang.Math;
 import java.awt.Graphics;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 class Obstacle extends Item {
 
@@ -9,8 +11,12 @@ class Obstacle extends Item {
 	private double initalY;
 	private boolean flying;
 	private int flyingHeight;
+	private String graphic = "obstacle.png";
+	private Image image;
 
 	public Obstacle(int width, int height, int x, int y) {
+		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
+		image = ii.getImage();
 		setWidth(width);
 		setHeight(height);
 		setX(x);
@@ -36,10 +42,17 @@ class Obstacle extends Item {
 		setX(getX() - Board.getInstance().getSpeed());
 	}
 
+	//public void paint(Graphics g) {
+	//	g.drawRect((int)getX()+(int)(flyX*10),(int)getY(),getWidth(),getHeight());
+	//}
 	public void paint(Graphics g) {
-		g.drawRect((int)getX()+(int)(flyX*10),(int)getY(),getWidth(),getHeight());
+		//g.drawRect((int)getX()+(int)(flyX*10),(int)getY(),getWidth(),getHeight());
+		int graphicX = (int)getX();
+		{
+		g.drawImage(image, (int)getX(), (int)getY(), Board.getInstance());
+	
+		}
 	}
-
 	public void attachWings() {
 		flying = true;
 	}
