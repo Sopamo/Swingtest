@@ -54,7 +54,6 @@ public class Board extends JPanel implements ActionListener {
         Board.instance = this;
 		
     }
-
     public static Board getInstance() {
         return Board.instance;
     }
@@ -234,6 +233,7 @@ public class Board extends JPanel implements ActionListener {
     public void stopGame() {
         timer.stop();
         ingame = false;
+        Collision.getInstance().showHighscore((int)points);
     }
 
     public Player getPlayer() {

@@ -30,11 +30,9 @@ public class Building extends Item {
 		setX(x);
 		setY(y);
 		setOrientation(1);
-		System.out.println(Board.getRandom(0,2));
 		if(Board.getRandom(0,2) == 1) {
         	this.setX(getX());
         	this.setY(Board.getRandom(100,200)-getHeight());
-        	System.out.println(getY());
         	this.setOrientation(-1);
         }
 		obstacles = new ArrayList();
