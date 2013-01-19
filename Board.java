@@ -32,7 +32,7 @@ public class Board extends JPanel implements ActionListener {
     private double points = 0;
     private double speed;
     private boolean doPaint;
-	private int gravity = -1;
+	private int gravity = 1;
 
     public Board() {
         addKeyListener(new TAdapter());
@@ -84,20 +84,21 @@ public class Board extends JPanel implements ActionListener {
 	
 	public void setGravity(int g) {
 		gravity = g;
+        Item.setOrientation(Item.getOrientation() * -1);
 	}
 
     public void initBuildings() {
         this.buildings = new ArrayList();
         //this.buildings.add(new Building(500, 500, 0, 300));
         //this.buildings.add(new Building(500, 500, 600, 400));
-		this.buildings.add(new Building(500, 500,0, -400));
+		this.buildings.add(new Building(500, 500,0, 400));
     }
 
     public void addBuilding() {
         Building b = new Building();
-        b.spawnObstacles();
-		b.spawnBirds();
         this.buildings.add(b);
+        b.spawnObstacles();
+        b.spawnBirds();
     }
 
 
@@ -155,7 +156,7 @@ public class Board extends JPanel implements ActionListener {
         points += 0.1 * speed;
 
         // Increase speed
-        if(speed < 4)
+        if(speed < 3)
             setSpeed(getSpeed()+0.0010);
 
         checkCollisions();

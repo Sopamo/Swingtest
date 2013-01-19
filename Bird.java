@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 public class Bird extends Item {
 
 	public final static 		BirdProperties SITTING = BirdProperties.SITTING,
-								FLYING	= BirdProperties.FLYING;
+											   FLYING  = BirdProperties.FLYING;
 
 	private String graphic = "bird.png";
 	private Image image;

@@ -14,6 +14,7 @@ public class Item {
 	private int height;
 	private double dx;
     private double dy;
+    private static int orienation = -1;
 
 	public double getX() {
 		return x;
@@ -56,11 +57,23 @@ public class Item {
     }
 
     public double getDY() {
-        return (double) this.dy;
+        return (double) this.dy ;
     }
 
     public double getDX() {
         return (double) this.dx;
+    }
+
+    public static int getOrientation() {
+		return orienation;
+	} 
+
+	public static void setOrientation(int or) {
+		orienation = or;
+	}
+
+	public void recalculateDY() {
+    	setDY(getDY() + 0.7/10 * Board.getInstance().getGravity());
     }
 
 	public boolean intersects(Item item) {

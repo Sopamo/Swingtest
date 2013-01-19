@@ -10,6 +10,7 @@ public class Building extends Item {
 	private ArrayList birds;
 	private String graphic = "building.png";
 	private Image image;
+	
 
 	public Building(int width, int height, int x, int y) {
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
@@ -18,10 +19,9 @@ public class Building extends Item {
 		setHeight(height);
 		setX(x);
 		setY(y);
-		this.obstacles = new ArrayList();
+		obstacles = new ArrayList();
 		birds = new ArrayList();
-		spawnObstacles();
-		spawnBirds();
+		
 	}
 
 	public Building() {
@@ -29,6 +29,11 @@ public class Building extends Item {
 		int buildingWidth = Board.getRandom(300,1000);
         buildingWidth += 50 - (buildingWidth % 50);
         this.setWidth(buildingWidth);
+        
+        if(Board.getRandom(0,2) == 1) {
+        	this.setX(getX());
+        	this.setY(500-getY()-getHeight());
+        }
 	}
 
 	public void move() {
@@ -66,6 +71,7 @@ public class Building extends Item {
 	}
 
 	public void spawnObstacles() {
+
 		if(Board.getRandom(0,2) != 1) return;
 		int lastX = 0;
 		for(int i = 0; i <= Board.getRandom(0,2); ++i)
@@ -87,6 +93,7 @@ public class Building extends Item {
 	}
 
 	public void paintObstacles(Graphics g) {
+		
 		if(this.obstacles.size() == 0) return;
 		for(int i = 0; i < this.obstacles.size(); ++i) {
 			Obstacle o = (Obstacle) this.obstacles.get(i);

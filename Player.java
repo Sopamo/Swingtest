@@ -74,6 +74,11 @@ public class Player extends Item {
             Board.getInstance().setEndgameMessage("Greet the concrete.");
             Board.getInstance().stopGame();
         }
+
+        if (getY() < 0) {
+            Board.getInstance().setEndgameMessage("Greet the sky.");
+            Board.getInstance().stopGame();
+        }
     }
 
     public int getImageStatus() {
@@ -99,6 +104,7 @@ public class Player extends Item {
 		if (key == KeyEvent.VK_E) {
 			int g = Board.getInstance().getGravity() * -1;
 			Board.getInstance().setGravity(g);
+            setDY(-0.5);
 		}
     }
 
@@ -112,10 +118,6 @@ public class Player extends Item {
         if (key == KeyEvent.VK_RIGHT) {
             setDX(0);
         }
-    }
-
-    public void recalculateDY() {
-    	setDY(getDY() + 0.81/10 * Board.getInstance().getGravity());
     }
 
     public void setMidair(boolean midair) {
