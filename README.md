@@ -4,6 +4,7 @@ Swingtest
 Testing java.swing. Just for fun.
 
 To start, hit:
+
 1. javac Collision.java
 2. java Collision
 
