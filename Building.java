@@ -9,8 +9,8 @@ public class Building extends Item {
     private ArrayList obstacles;
     private ArrayList powerups;
 	private ArrayList birds;
-	private String graphic = "building.png";
-	private Image image;
+	private ArrayList images;
+	private int[] imageSequence;
 	
 
 	public Building(int width, int height, int x, int y) {
@@ -22,14 +22,23 @@ public class Building extends Item {
         	y = Board.getRandom(290,420);
 		}
 		height = 600;
-
-		ImageIcon ii = new ImageIcon(this.getClass().getResource(graphic));
-        image = ii.getImage();
 		setWidth(width);
 		setHeight(height);
 		setX(x);
 		setY(y);
 		setOrientation(1);
+
+		images = new ArrayList();
+		for(int i = 0; i<3; ++i) {
+			ImageIcon ii = new ImageIcon(this.getClass().getResource("building"+(int)(i+1)+".png"));
+	        images.add(ii.getImage());
+		}
+		int buildingcount = (int)(getWidth() / 50);
+		imageSequence = new int[buildingcount];
+		for(int i = 0; i < getWidth() / 50; ++i)
+		{
+			imageSequence[i] = Board.getRandom(0,2);
+		}
 		if(Board.getRandom(0,2) == 1) {
         	this.setX(getX());
         	this.setY(Board.getRandom(100,200)-getHeight());
@@ -66,6 +75,8 @@ public class Building extends Item {
 		int graphicX = (int)getX();
 		for(int i = 0; i < getWidth() / 50; ++i)
 		{
+			int index = imageSequence[i];
+			Image image = (Image)images.get(index);
 			g.drawImage(image, graphicX, (int)getY(), Board.getInstance());
 			graphicX += 50;
 		}
@@ -89,9 +100,9 @@ public class Building extends Item {
 
 	public void spawnObstacles() {
 
-		if(Board.getRandom(0,2) != 1) return;
+		if(Board.getRandom(0,3) != 1) return;
 		int lastX = 0;
-		for(int i = 0; i <= Board.getRandom(0,2); ++i)
+		for(int i = 0; i <= Board.getRandom(0,1); ++i)
 		{
 			lastX += Board.getRandom(180,300);
 			if(lastX + 120 > getWidth()) break;

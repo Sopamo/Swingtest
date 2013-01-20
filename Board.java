@@ -112,8 +112,7 @@ public class Board extends JPanel implements ActionListener {
         if (ingame) {
 
             Graphics2D g2d = (Graphics2D)g;
-            
-            g2d.drawImage(player.getImage(), (int)player.getX(), (int)player.getY(), this);
+            player.paint(g2d);
 
             g2d.setColor(Color.WHITE);
 
@@ -195,7 +194,7 @@ public class Board extends JPanel implements ActionListener {
                     if(player.intersects(o.getItem()) && player.getX() + 10 >= o.getX()) {
                         o.deactivate();
                         o.attachWings();
-                        setSpeed(getSpeed()-1);
+                        setSpeed(getSpeed()-0.7);
                     }
                 }
             }
@@ -243,7 +242,9 @@ public class Board extends JPanel implements ActionListener {
     public static int getRandom(int from, int to) {
         int diff = to - from;
         double random = Math.random();
-        return from + (int)(diff * random);
+        int rand = from + (int)((diff * random)+0.5);
+        if(rand > to) rand = to;
+        return rand;
     }
 
 
